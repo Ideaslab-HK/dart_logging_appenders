@@ -40,7 +40,7 @@ class RotatingFileAppender extends BaseLogAppender {
   final String baseFilePath;
 
   /// the number of rotated files to keep.
-  /// e.g. if this is 3 we will create `filename`, `filename.1`, `filename.2`.
+  /// e.g. if this is 3 we will create `filename`, `filename.1`, `filename.2`, `filename.3`.
   final int keepRotateCount;
 
   /// The size in bytes we allow a file to grow before rotating it.
@@ -60,7 +60,7 @@ class RotatingFileAppender extends BaseLogAppender {
 
   /// Returns all available rotated logs, starting from the most current one.
   List<File> getAllLogFiles() =>
-      Iterable.generate(keepRotateCount, (idx) => idx)
+      Iterable.generate(keepRotateCount + 1, (idx) => idx)
           .map((rotation) => _fileNameForRotation(rotation))
           .map((fileName) => File(fileName))
           .takeWhile((file) => file.existsSync())
